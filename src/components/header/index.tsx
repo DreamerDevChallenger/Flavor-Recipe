@@ -1,14 +1,15 @@
 "use client";
 
-import { Spirax } from "next/font/google";
+import { spirax } from "@/utils/font";
+import Link from "next/link";
 import styled from "styled-components";
-
-const inter = Spirax({ subsets: ["latin"], weight: "400" });
 
 export default function Header() {
   return (
     <StyledHeader>
-      <h1 className={inter.className}>Flavor Recipe</h1>
+      <Link href="/">
+        <h1 className={spirax.className}>Flavor Recipe</h1>
+      </Link>
     </StyledHeader>
   );
 }
@@ -22,6 +23,7 @@ const StyledHeader = styled.header`
 
   h1 {
     font-style: italic;
-    font-size: 32px;
+    font-size: 40px;
+    text-align: center;
   }
 `;

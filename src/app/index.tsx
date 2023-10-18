@@ -8,8 +8,9 @@ import StyledComponentsRegistry from "../lib/registry";
 import Header from "@/components/header";
 
 const darkTheme = {
-  text: "#FFFFFF",
-  background: "#000000",
+  text: "#F6F6F6",
+  background: "#111111",
+  second_background: "#151515",
   primary: "#B62E08",
   secondary: "#E2712C",
   accent: "#D32F1D",
@@ -17,8 +18,9 @@ const darkTheme = {
 };
 
 const lightTheme = {
-  text: "#000000",
-  background: "#FFFFFF",
+  text: "#111111",
+  background: "#F6F6F6",
+  second_background: "",
   primary: "#B62E08",
   secondary: "#E2A52C",
   accent: "#D32F1D",
@@ -49,8 +51,25 @@ const StyledApp = styled.div`
   background-color: ${({ theme }) => theme.background};
   color: ${({ theme }) => theme.text};
   min-height: 100vh;
+  display: flex;
+  flex-direction: column;
 
   main {
     flex: 1;
+    display: flex;
+    flex-direction: column;
+    padding: 48px 32px;
+  }
+
+  @media (min-width: 425px) {
+    main {
+      padding: 48px;
+    }
+  }
+
+  @media (max-width: 424px) {
+    main {
+      padding: 48px 16px;
+    }
   }
 `;

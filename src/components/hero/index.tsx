@@ -8,7 +8,7 @@ import Button from "../materials/button";
 export default function Hero() {
   return (
     <StyledHero>
-      <div className="picture-container">
+      <div className="banner">
         <Image
           src={hero_picture.src}
           objectFit="cover"
@@ -23,8 +23,12 @@ export default function Hero() {
           <span>friends</span>
         </p>
         <div className="button-container">
-          <Button color="secondary">Recipes</Button>
-          <Button color="primary">Join us</Button>
+          <Button link="recipes-list" color="secondary">
+            Recipes
+          </Button>
+          <Button link="sign-up" color="primary">
+            Join us
+          </Button>
         </div>
       </article>
     </StyledHero>
@@ -34,11 +38,10 @@ export default function Hero() {
 const banner = keyframes`
   from {
     opacity: 0;
-    transform: rotateX(-90deg);
   }
 
   to {
-    transform: rotateX(0deg);
+    opacity: 1;
   }
 `;
 
@@ -76,6 +79,7 @@ const StyledHero = styled.section`
     display: flex;
     flex-direction: column;
     gap: 20px;
+
     p {
       animation: ${text} 1.5s 0s ease forwards;
       text-transform: uppercase;
@@ -98,6 +102,7 @@ const StyledHero = styled.section`
       display: flex;
       justify-content: center;
       gap: 24px;
+
       .button-item {
         opacity: 0;
         animation: ${button} 1.5s 1.5s ease forwards;
@@ -105,13 +110,36 @@ const StyledHero = styled.section`
     }
   }
 
-  .picture-container {
+  .banner {
     overflow: hidden;
     border-radius: 2px;
     position: relative;
+    opacity: 0;
     height: 200px;
     width: 100%;
     max-width: 300px;
-    animation: ${banner} 1.5s 0s ease forwards;
+    animation: ${banner} 2.5s 0.5s ease forwards;
+  }
+
+  @media (min-width: 425px) {
+    .banner {
+      height: 250px;
+      max-width: 375px;
+    }
+  }
+
+  @media (min-width: 768px) {
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: center;
+
+    .content {
+      max-width: 500px;
+    }
+    .banner {
+      height: 300px;
+      max-width: 450px;
+      min-width: 350px;
+    }
   }
 `;

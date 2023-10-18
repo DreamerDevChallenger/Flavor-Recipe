@@ -15,9 +15,11 @@ a {
   text-decoration: none;
 }
 
-button {
-  background: none;
-  border: none;
-  outline: none;
+input {
   color: inherit;
+  outline: none;
+}
+
+button {
+  all: unset;
 }

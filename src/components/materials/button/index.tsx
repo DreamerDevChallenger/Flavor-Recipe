@@ -1,16 +1,28 @@
 import RippleEffect from "@/utils/ripple-effect";
 import styled, { keyframes } from "styled-components";
+import { useRouter } from "next/navigation";
+
+import { useCallback } from "react";
+import Link from "next/link";
 
 interface ButtonProps {
   children: React.ReactNode;
   color: "primary" | "secondary";
+  link: string;
 }
 
-export default function Button({ children, color }: ButtonProps) {
+export default function Button({ children, color, link }: ButtonProps) {
+  const handleClick = useCallback(
+    (e: React.MouseEvent<HTMLButtonElement>) => RippleEffect(e),
+    []
+  );
+
   return (
-    <StyledButton onClick={RippleEffect} className={`button-item ${color}`}>
-      {children}
-    </StyledButton>
+    <Link href={link}>
+      <StyledButton onClick={handleClick} className={`button-item ${color}`}>
+        {children}
+      </StyledButton>
+    </Link>
   );
 }
 
@@ -26,7 +38,7 @@ const StyledButton = styled.button`
   border-radius: 4px;
   cursor: pointer;
   position: relative;
-
+  color: white;
   overflow: hidden;
 
   .ripple {
