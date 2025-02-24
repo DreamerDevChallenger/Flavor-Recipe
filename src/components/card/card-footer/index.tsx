@@ -1,20 +1,14 @@
 import { spirax } from "@/utils/font";
-import {
-  MonetizationOn,
-  Timer,
-  EmojiObjects,
-  LocalDining,
-} from "@mui/icons-material";
-import styled from "styled-components";
+import { EmojiObjects, LocalDining, Timer } from "@mui/icons-material";
+import { Box, styled } from "@mui/material";
 
 interface Props {
   time: number;
-  price: string;
   type: string;
   difficult: string;
 }
 
-export default function CardFooter({ time, price, type, difficult }: Props) {
+export default function CardFooter({ time, type, difficult }: Props) {
   return (
     <StyledCardFooter className={spirax.className}>
       <div className="item-card-information time">
@@ -29,26 +23,29 @@ export default function CardFooter({ time, price, type, difficult }: Props) {
         <LocalDining />
         <span>{type}</span>
       </div>
-      <div className="item-card-information price">
-        <MonetizationOn />
-        <span>{price}</span>
-      </div>
     </StyledCardFooter>
   );
 }
 
-const StyledCardFooter = styled.div`
+const StyledCardFooter = styled(Box)`
   display: flex;
   justify-content: space-around;
   padding: 24px;
+  margin-top: auto;
 
   .item-card-information {
     display: flex;
     flex-direction: column;
     gap: 4px;
     align-items: center;
+    transition: transform 0.3s ease-in-out;
+
+    &:hover {
+      transform: scale(1.05);
+      will-change: transform;
+    }
     svg {
-      color: ${({ theme }) => theme.accent};
+      color: ${({ theme }) => theme.colors.accent};
     }
   }
 `;

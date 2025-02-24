@@ -1,11 +1,20 @@
 "use client";
 
-import styled from "styled-components";
-
 import Hero from "@/components/hero";
 import Preview from "@/components/preview";
+import { apiGetRecipes } from "@/services/api";
+import { Box, styled } from "@mui/material";
+import { useCallback, useEffect } from "react";
 
 export default function Home() {
+  const callBack = useCallback(async () => {
+    await apiGetRecipes();
+  }, []);
+
+  useEffect(() => {
+    callBack();
+  }, []);
+
   return (
     <StyledHome>
       <Hero />
@@ -14,6 +23,10 @@ export default function Home() {
   );
 }
 
-const StyledHome = styled.main`
+const StyledHome = styled(Box)`
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  padding-bottom: 40px;
   gap: 48px;
 `;

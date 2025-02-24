@@ -1,10 +1,13 @@
 "use client";
 
+import { useAppDispatch } from "@/redux/hooks";
 import { spirax } from "@/utils/font";
+import { Box, styled } from "@mui/material";
 import Link from "next/link";
-import styled from "styled-components";
 
 export default function Header() {
+  const dispatch = useAppDispatch();
+
   return (
     <StyledHeader>
       <Link href="/">
@@ -14,9 +17,9 @@ export default function Header() {
   );
 }
 
-const StyledHeader = styled.header`
-  border-bottom: 1px solid rgba(${({ theme }) => theme.border}, 0.1);
-  background-color: ${({ theme }) => theme.background};
+const StyledHeader = styled(Box)`
+  border-bottom: 1px solid rgba(${({ theme }) => theme.colors.border}, 0.1);
+  background-color: ${({ theme }) => theme.colors.second_background};
   padding: 16px 24px;
   display: flex;
   justify-content: center;

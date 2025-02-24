@@ -3,14 +3,14 @@
 import { useAppSelector } from "@/redux/hooks";
 import { selectTheme } from "@/redux/selectors";
 
-import styled, { ThemeProvider } from "styled-components";
-import StyledComponentsRegistry from "../lib/registry";
+import Footer from "@/components/footer";
 import Header from "@/components/header";
+import { Box, createTheme, styled, ThemeProvider } from "@mui/material";
 
 const darkTheme = {
   text: "#F6F6F6",
   background: "#111111",
-  second_background: "#151515",
+  second_background: "#191919",
   primary: "#B62E08",
   secondary: "#E2712C",
   accent: "#D32F1D",
@@ -32,29 +32,49 @@ const lightTheme = {
  * @returns
  */
 
+export interface IAppTheme {
+  colors: {
+    text: string;
+    background: string;
+    second_background: string;
+    primary: string;
+    secondary: string;
+    accent: string;
+    border: string;
+  };
+}
+
+declare module "@mui/material/styles" {
+  interface Theme extends IAppTheme {}
+  interface ThemeOptions extends IAppTheme {}
+}
+
 export default function App({ children }: { children: React.ReactNode }) {
-  const theme = useAppSelector(selectTheme);
+  const { theme } = useAppSelector(selectTheme);
+  const AppTheme = createTheme({
+    colors: theme === "light" ? lightTheme : darkTheme,
+  });
 
   return (
-    <StyledComponentsRegistry>
-      <ThemeProvider theme={theme.theme === "light" ? lightTheme : darkTheme}>
-        <StyledApp id="app">
-          <Header />
-          {children}
-        </StyledApp>
-      </ThemeProvider>
-    </StyledComponentsRegistry>
+    <ThemeProvider theme={AppTheme}>
+      <StyledApp id="app">
+        <Header />
+        <Box className="app-main">{children}</Box>
+        <Footer />
+      </StyledApp>
+    </ThemeProvider>
   );
 }
 
-const StyledApp = styled.div`
-  background-color: ${({ theme }) => theme.background};
-  color: ${({ theme }) => theme.text};
+const StyledApp = styled(Box)`
+  background-color: ${({ theme }) => theme.colors.background};
+  color: ${({ theme }) => theme.colors.text};
   min-height: 100vh;
   display: flex;
   flex-direction: column;
+  gap: 12px;
 
-  main {
+  .app-main {
     flex: 1;
     display: flex;
     flex-direction: column;
@@ -62,13 +82,13 @@ const StyledApp = styled.div`
   }
 
   @media (min-width: 425px) {
-    main {
+    .app-main {
       padding: 48px;
     }
   }
 
   @media (max-width: 424px) {
-    main {
+    .app-main {
       padding: 48px 16px;
     }
   }

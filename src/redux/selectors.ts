@@ -1,1 +1,5 @@
-export const selectTheme = (state: { theme: any }) => state.theme;
+import { RootState } from "./store";
+
+export const selectTheme = (state: RootState) => state.localStorage.themeSlice;
+export const selectRecipes = (state: RootState) =>
+  state.localStorage.recipesSlice;

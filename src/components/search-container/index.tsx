@@ -1,8 +1,8 @@
 "use client";
 
-import styled from "styled-components";
-import { useState, useEffect, useCallback } from "react";
+import { Box, styled } from "@mui/material";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { useCallback, useState } from "react";
 
 export default function SearchContainer() {
   const router = useRouter();
@@ -24,25 +24,21 @@ export default function SearchContainer() {
 
   return (
     <StyledSearchContainer>
-      <input
-        type="text"
-        value={search}
-        onChange={handleChange}
-        className="search-bar"
-        placeholder="Search Your Recipe"
-      />
+      <input type="text" value={search} onChange={handleChange} className="search-bar" placeholder="Search Your Recipe" />
     </StyledSearchContainer>
   );
 }
 
-const StyledSearchContainer = styled.section`
-  width: 100%;
+const StyledSearchContainer = styled(Box)`
+  width: 200px;
 
   .search-bar {
     width: 100%;
-    background-color: ${({ theme }) => theme.second_background};
+    background-color: ${({ theme }) => theme.colors.second_background};
     border: 0;
     padding: 12px 12px;
-    box-shadow: 0 0 2px ${({ theme }) => `rgba(${theme.border}, .2)`};
+    border-radius: 100px;
+    overflow: hidden;
+    box-shadow: 0 0 2px ${({ theme }) => `rgba(${theme.colors.border}, .2)`};
   }
 `;

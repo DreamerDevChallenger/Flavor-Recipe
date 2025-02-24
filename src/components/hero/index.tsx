@@ -1,9 +1,9 @@
 "use client";
 
-import Image from "next/legacy/image";
-import styled, { keyframes } from "styled-components";
 import hero_picture from "@/assets/images/hero.jpg";
-import Button from "../materials/button";
+import { Box, keyframes, styled } from "@mui/material";
+import Image from "next/legacy/image";
+import ButtonComponent from "../materials/button";
 
 export default function Hero() {
   return (
@@ -23,12 +23,12 @@ export default function Hero() {
           <span>friends</span>
         </p>
         <div className="button-container">
-          <Button link="recipes-list" color="secondary">
+          <ButtonComponent link="recipes-list" color="secondary">
             Recipes
-          </Button>
-          <Button link="sign-up" color="primary">
+          </ButtonComponent>
+          <ButtonComponent link="sign-up" color="primary">
             Join us
-          </Button>
+          </ButtonComponent>
         </div>
       </article>
     </StyledHero>
@@ -66,7 +66,7 @@ const button = keyframes`
   }
 `;
 
-const StyledHero = styled.section`
+const StyledHero = styled(Box)`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -89,7 +89,7 @@ const StyledHero = styled.section`
       span {
         background: linear-gradient(
           to left,
-          ${({ theme }) => `${theme.secondary}, ${theme.primary}`}
+          ${({ theme }) => `${theme.colors.secondary}, ${theme.colors.primary}`}
         );
         background-clip: text;
         -webkit-background-clip: text;

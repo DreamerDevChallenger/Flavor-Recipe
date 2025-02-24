@@ -1,9 +1,10 @@
-import { combineReducers, configureStore } from "@reduxjs/toolkit";
-import themeReducer from "./reducers/theme";
+import { configureStore, PayloadAction } from "@reduxjs/toolkit";
+
+import { persistReducer, persistStore } from "redux-persist";
+
 import createWebStorage from "redux-persist/lib/storage/createWebStorage";
 
-import { persistReducer } from "redux-persist";
-import thunk from "redux-thunk";
+import { localReducer } from "./root";
 
 const createNoopStorage = () => {
   return {
@@ -24,22 +25,45 @@ const storage =
     ? createWebStorage("local")
     : createNoopStorage();
 
-const reducers = combineReducers({
-  theme: themeReducer,
-});
-
-const persistConfig = {
-  key: "root",
-  storage,
+const localStoragePersistConfig = {
+  key: "local",
+  storage: storage,
+  // other configurations for localStorage if needed
 };
 
-const persistedReducer = persistReducer(persistConfig, reducers);
+const persistedLocalReducer = persistReducer(
+  localStoragePersistConfig,
+  localReducer
+);
 
 export const store = configureStore({
-  reducer: persistedReducer,
+  reducer: {
+    localStorage: persistedLocalReducer,
+  },
   devTools: process.env.NODE_ENV !== "production",
-  middleware: [thunk],
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware({
+      serializableCheck: false, // Disable the warning about non-serializable values
+      immutableCheck: false,
+    }),
 });
 
 export type RootState = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch;
+export type AppActionRecord<K, T> = (
+  state: AppStoreNullable<K>,
+  actions: PayloadAction<Exclude<T, null>>
+) => void;
+export type AppStoreNullable<T> = {
+  [P in keyof T]: T[P] | null;
+};
+export type AppActionRecordNotNull<K, T> = (
+  state: AppStoreNonNullable<K>,
+  actions: PayloadAction<Exclude<T, null>>
+) => void;
+
+export type AppStoreNonNullable<T> = {
+  [K in keyof T]: Exclude<T[K], null>;
+};
+
+export const persistor = persistStore(store);

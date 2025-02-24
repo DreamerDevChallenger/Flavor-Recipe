@@ -1,18 +1,16 @@
+import { utilInitReducer } from "@/utils/initialization/initReducer";
 import { createSlice } from "@reduxjs/toolkit";
-import themeActions from "../../actions/theme";
 
-const initialState = { theme: "light" };
+const initialState = { theme: "dark" };
 
-const themeSlice = createSlice({
+const { actions, reducer } = createSlice({
   name: "theme",
   initialState,
   reducers: {
-    ...themeActions,
+    ...utilInitReducer(initialState),
   },
 });
 
-const { actions, reducer } = themeSlice;
-
-export const { toggleTheme } = actions;
+export const setTheme = actions;
 
 export default reducer;
